@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Goa Trip Registration</title>
+</head>
+<body>
+  <h2>Goa Group Trip - Client Registration Form</h2>
+  <form id="goaForm">
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Phone:</label><br>
+    <input type="text" name="phone" required><br><br>
+
+    <label>Number of Persons:</label><br>
+    <input type="number" name="persons" required><br><br>
+
+    <label>Travel Date:</label><br>
+    <input type="date" name="date" required><br><br>
+
+    <label>Special Requests:</label><br>
+    <textarea name="message"></textarea><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="response"></p>
+
+  <script>
+    document.getElementById('goaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      fetch('https://script.google.com/macros/s/AKfycbzBF0NzuuXsWRbjkjuluMCL_YYNz1bhn7gWunwOD5nWTy5omAOQo7mRz-O_i1dRznB3pg/exec', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        document.getElementById('response').innerText = "Form submitted successfully!";
+        document.getElementById('goaForm').reset();
+      })
+      .catch(error => {
+        document.getElementById('response').innerText = "Error: " + error;
+      });
+    });
+  </script>
+</body>
+</html>
